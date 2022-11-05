@@ -1,7 +1,36 @@
 .App {
   text-align: center;
 }
+.pageContainer{
+  max-width: 1440px;
+  margin: auto;
+  padding-top: 100px;
+}
+.header{
+  background: whitesmoke;
+  width: 100vw;
+  height: 50px;
+  padding: 10px;
+  z-index: 1000;
+  position: fixed;
+}
+.searchInput{
+  display: flex;
+  justify-content: center;
+}
+.imgContainer{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 8px;
 
+}
+.imgItem{
+  width: 350px;
+  height: 300px;
+  border-radius: 8px;
+  margin: 8px;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
