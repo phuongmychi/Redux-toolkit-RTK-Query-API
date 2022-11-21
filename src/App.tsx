@@ -2,12 +2,21 @@
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import { useGetImageByNameQuery } from "./redux/service";
+import {
+  useGetImageByNameQuery,
+  useLazyGetImageByNameQuery,
+} from "./redux/service";
 import ImageLazy from "./components/ImageLazy";
 
+export const removeDuplicate = (arr: []) => {
+  const resp = arr
+      ? arr?.filter((v, i, a) => a.findIndex((t: {}) => t === v) === i)
+      : [];
+  return resp;
+};
 export type Photo = {
   id: number;
   width: number;
@@ -31,39 +40,80 @@ export type Photo = {
   alt: string;
 };
 function App() {
+  const [page, setPage] = useState(1);
 
   const config = {
     name: "girl",
-    page: 1,
+    page: page,
   };
 
   const { data, error, isLoading } = useGetImageByNameQuery(config);
+  const [trigger] = useLazyGetImageByNameQuery();
+  const [dataPhotos, setDataPhotos] = useState<any>([]);
+  useEffect(() => {
+    const fetchApi = async () => {
+      const result = await trigger({
+        name: "girl",
+        page: 1,
+      }).refetch();
+      setDataPhotos(result?.data?.photos || []);
+    };
+    fetchApi();
+  }, []);
+
+  const loadMore = async () => {
+    setPage(page + 1);
+    setDataPhotos(dataPhotos.concat(...(data?.photos || [])));
+
+  };
+  const handleHome = async () => {
+    setDataPhotos([]);
+    const result = await trigger({
+      name: "girl",
+      page: 1,
+    }).refetch();
+    if (result?.data) {
+      setDataPhotos(result?.data?.photos || []);
+    }
+  };
+
   if (error) {
-    return <div className="pageContainer">Error</div>;
+    return (
+      <div className="pageContainer">
+        {" "}
+        <div className={"loadingPage"}>Đã xảy ra lỗi không mong muốn</div>
+      </div>
+    );
   } else if (isLoading) {
-    return <div className="pageContainer">Loading page</div>;
+    return (
+      <div className="pageContainer">
+        <div className={"loadingPage"}>Loading page</div>
+      </div>
+    );
   } else {
     return (
       <>
         <div className={"header"}>
-          <h3>Redux toolkit RTK Query API </h3>
-
+          <h3 style={{ cursor: "pointer" }} onClick={handleHome}>
+            Redux toolkit RTK Query API{" "}
+          </h3>
         </div>
         <div className="pageContainer">
-
           <div className="imgContainer">
-
-            {data?.photos?.map((item: Photo) => (
-                <div className={"cardItem"} key={item?.id}>
-                  <ImageLazy imgUrl={item?.src?.medium} className={"imgItem"} />
-                  <div className={"nameAuthor"}>
-                    {item?.photographer}
-                  </div>
-                </div>
+            {removeDuplicate(dataPhotos)?.map((item: Photo) => (
+              <div className={"cardItem"} key={item?.id}>
+                <ImageLazy imgUrl={item?.src?.medium} className={"imgItem"} />
+                <div className={"nameAuthor"}>{item?.photographer}</div>
+              </div>
             ))}
           </div>
+          <div className={"loadMore"}>{isLoading ? "Loading" : null}</div>
+          <div className={"loadMore"}>
+            <button className={"buttonLoadMore"} onClick={loadMore}>
+              Xem Thêm
+            </button>
+          </div>
         </div>
-
       </>
     );
   }
