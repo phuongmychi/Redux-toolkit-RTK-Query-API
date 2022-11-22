@@ -2,7 +2,7 @@
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import {
@@ -10,13 +10,18 @@ import {
   useLazyGetImageByNameQuery,
 } from "./redux/service";
 import ImageLazy from "./components/ImageLazy";
+import Loading from "./components/Loading";
+import { Link } from "react-router-dom";
+import {Header} from "./components/Header";
 
 export const removeDuplicate = (arr: []) => {
   const resp = arr
-      ? arr?.filter((v, i, a) => a.findIndex((t: {}) => t === v) === i)
-      : [];
+    ? arr?.filter((v, i, a) => a.findIndex((t: {}) => t === v) === i)
+    : [];
   return resp;
 };
+
+
 export type Photo = {
   id: number;
   width: number;
@@ -39,11 +44,12 @@ export type Photo = {
   liked: boolean;
   alt: string;
 };
+
 function App() {
   const [page, setPage] = useState(1);
 
   const config = {
-    name: "girl",
+    name: "nature",
     page: page,
   };
 
@@ -53,23 +59,22 @@ function App() {
   useEffect(() => {
     const fetchApi = async () => {
       const result = await trigger({
-        name: "girl",
+        name: "nature",
         page: 1,
       }).refetch();
       setDataPhotos(result?.data?.photos || []);
     };
     fetchApi();
-  }, []);
-
-  const loadMore = async () => {
+  }, [trigger]);
+  const loadMore = useCallback(() => {
     setPage(page + 1);
     setDataPhotos(dataPhotos.concat(...(data?.photos || [])));
+  }, [page, dataPhotos, setDataPhotos, setPage]);
 
-  };
   const handleHome = async () => {
     setDataPhotos([]);
     const result = await trigger({
-      name: "girl",
+      name: "nature",
       page: 1,
     }).refetch();
     if (result?.data) {
@@ -77,46 +82,39 @@ function App() {
     }
   };
 
-  if (error) {
-    return (
+  useEffect(() => {
+    function handleScrollEvent() {
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        loadMore();
+        // here add more items in the 'filteredData' state from the 'allData' state source.
+      }
+    }
+
+    window.addEventListener('scroll', handleScrollEvent)
+
+    return () => {
+      window.removeEventListener('scroll', handleScrollEvent);
+    }
+  }, [loadMore])
+
+  return (
+    <>
+      <Header homePage={handleHome}/>
       <div className="pageContainer">
-        {" "}
-        <div className={"loadingPage"}>Đã xảy ra lỗi không mong muốn</div>
-      </div>
-    );
-  } else if (isLoading) {
-    return (
-      <div className="pageContainer">
-        <div className={"loadingPage"}>Loading page</div>
-      </div>
-    );
-  } else {
-    return (
-      <>
-        <div className={"header"}>
-          <h3 style={{ cursor: "pointer" }} onClick={handleHome}>
-            Redux toolkit RTK Query API{" "}
-          </h3>
+        <div className="imgContainer">
+          {dataPhotos?.map((item: Photo) => (
+            <div className={"cardItem"} key={item?.id}>
+              <ImageLazy imgUrl={item?.src?.medium} className={"imgItem"} />
+              <div className={"nameAuthor"}>{item?.photographer}</div>
+            </div>
+          ))}
         </div>
-        <div className="pageContainer">
-          <div className="imgContainer">
-            {removeDuplicate(dataPhotos)?.map((item: Photo) => (
-              <div className={"cardItem"} key={item?.id}>
-                <ImageLazy imgUrl={item?.src?.medium} className={"imgItem"} />
-                <div className={"nameAuthor"}>{item?.photographer}</div>
-              </div>
-            ))}
-          </div>
-          <div className={"loadMore"}>{isLoading ? "Loading" : null}</div>
-          <div className={"loadMore"}>
-            <button className={"buttonLoadMore"} onClick={loadMore}>
-              Xem Thêm
-            </button>
-          </div>
-        </div>
-      </>
-    );
-  }
+        <div className={"loadMore"}>{error ? <p>Đã sảy ra lỗi không mong muốn</p>: null}</div>
+        <div className={"loadMore"}>{isLoading ? <Loading /> : null}</div>
+
+      </div>
+    </>
+  );
 }
 
 export default App;
