@@ -2,16 +2,12 @@
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */
 
-/*
- * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
- */
 
 import ImageLazy from "../components/ImageLazy";
 import Loading from "../components/Loading";
-import { Header } from "../components/Header";
-import { useScollLoadMore } from "../hooks";
-import { Photo } from "../components/Type/photoType";
-import Head from "next/head"
+import {Header} from "../components/Header";
+import {useScollLoadMore} from "../hooks";
+import {Photo} from "../components/Type/photoType";
 
 export const removeDuplicate = (arr: []) => {
   const resp = arr
