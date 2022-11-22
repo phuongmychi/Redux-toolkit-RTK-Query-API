@@ -73,6 +73,7 @@ function App() {
 
   const handleHome = async () => {
     setDataPhotos([]);
+    setPage(1)
     const result = await trigger({
       name: "nature",
       page: 1,
@@ -81,15 +82,15 @@ function App() {
       setDataPhotos(result?.data?.photos || []);
     }
   };
-
+  var clicks = 0; // counter
   useEffect(() => {
     function handleScrollEvent() {
       if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
         loadMore();
+        console.log(clicks+=1); // increment it
         // here add more items in the 'filteredData' state from the 'allData' state source.
       }
     }
-
     window.addEventListener('scroll', handleScrollEvent)
 
     return () => {
