@@ -1,37 +1,36 @@
-// This is component Image with Lazy load for more detail : https://web.dev/lazy-loading-images/
+// This is component Image with Lazy load
 import React, {
   CSSProperties,
   FunctionComponent,
-  KeyboardEventHandler,
-  MouseEventHandler,
   useEffect,
   useRef,
   useState,
-  Key,
-} from 'react';
-import { useImageBroken } from '../../hooks';
+  MouseEventHandler,
+  KeyboardEventHandler,
+  useMemo,
+} from "react";
+import useImageBroken from "../../hooks/useImageBroken";
 
 export type ImageLazyProps = {
   imgUrl: string;
-  srcSet?: string;
-  crossOrigin?: 'anonymous' | 'use-credentials' | '';
-  referrerPolicy?: React.HTMLAttributeReferrerPolicy;
-  loading?: 'lazy' | 'eager';
   width?: number | string;
   height?: number | string;
-  id?: string;
+  radiusBorder?: number;
   className?: string;
   onClick?: MouseEventHandler<HTMLImageElement>;
   onKeyDown?: KeyboardEventHandler<HTMLImageElement>;
-  onKeyPress?: KeyboardEventHandler<HTMLImageElement>;
-  onError?: KeyboardEventHandler<HTMLImageElement>;
+  onKeyPress?: () => void;
   style?: CSSProperties;
   alt?: string;
-  key?: any;
+  id?: string;
+  crossOrigin?: "anonymous" | "use-credentials" | "";
+  loading?: "lazy" | "eager";
+  isLoading?: boolean;
 };
 
 const ImageLazy = React.memo(function ImageLazy({
   alt,
+  radiusBorder,
   onClick,
   style,
   height,
@@ -43,51 +42,158 @@ const ImageLazy = React.memo(function ImageLazy({
   imgUrl,
   width,
   className,
-  key,
-  onError,
-  referrerPolicy,
-  srcSet,
+  isLoading,
 }: ImageLazyProps) {
+  // check if image url work or not , it work  return true, else return false;
   const isUrl = useImageBroken(imgUrl);
   const [shouldLoad, setShouldLoad] = useState(false);
   const imgLoadingRef = useRef<HTMLDivElement>(null);
+  function validURL(str: string) {
+    var regex = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+    if (!regex.test(str)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  const getHttps = () => {
+    const isvalidUrl = validURL(imgUrl);
+    if (isvalidUrl) {
+      return imgUrl?.replace("http://", "https://");
+    } else {
+      return imgUrl;
+    }
+  };
+  const isUrlValid = getHttps();
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
-    if (!shouldLoad && imgLoadingRef.current) {
+    if (!shouldLoad && imgLoadingRef?.current) {
       const observer = new IntersectionObserver(([{ intersectionRatio }]) => {
         if (intersectionRatio > 0) {
           setShouldLoad(true);
         }
       });
-      observer.observe(imgLoadingRef.current);
+      observer.observe(imgLoadingRef?.current);
       return () => observer.disconnect();
     }
   }, [shouldLoad, imgLoadingRef]);
+
+  const cssStyles = `
+    #imgTeacher {
+        padding-right:0px;
+        width:320px;
+        height:100%;
+        border-radius:${radiusBorder}px;
+    }
+     #imgTeacherLoading {
+        padding-right:0px;
+        background-image: linear-gradient(#91C884, #CCD492,#7CB4E0);
+        width:320px;
+        height:180px;
+        text-align:center;
+        border-radius:${radiusBorder}px;
+    }
+   @media only screen and (max-width: 1440px) {
+    #imgTeacher {
+        width:100%;
+        border-radius:${radiusBorder}px;
+    }
+    #imgTeacherLoading {
+        padding-right:0px;
+        background-image: linear-gradient(#91C884, #CCD492,#7CB4E0);
+        width:300px;
+        height:180px;
+        text-align:center;
+        border-radius:${radiusBorder}px;
+    }
+    }
+    @media only screen and (max-width: 768px) {
+    #imgTeacher {
+        width:100%;
+        border-radius:${radiusBorder}px;
+    }
+    #imgTeacherLoading {
+        padding-right:0px;
+        background-image: linear-gradient(#91C884, #CCD492,#7CB4E0);
+        width:100%;
+        height:180px;
+        text-align:center;
+        border-radius:${radiusBorder}px;
+    }
+    }`;
+  if (isLoading) {
+    return (
+      <div
+        id={id}
+        className={className}
+        style={{
+          backgroundImage: "linear-gradient(#91C884, #CCD492,#7CB4E0)",
+          borderRadius: "8px",
+        }}
+        ref={imgLoadingRef}
+      >
+        <p
+          style={{
+            paddingTop: "100px",
+            color: "white",
+            textAlign: "center",
+          }}
+        >
+          Loading ...
+        </p>
+      </div>
+    );
+  }
   return (
     <>
-      <img
-        src={
-          isUrl
-            ? imgUrl
-            : 'https://antoree-v1-prod-files.s3.ap-southeast-1.amazonaws.com/user_196374/campaigns/file_1647619503_6234adafdec6f8.79189829.png'
-        }
-        srcSet={srcSet}
-        referrerPolicy={referrerPolicy}
-        key={imgUrl}
-        onError={onError}
-        alt={alt}
-        width={width}
-        height={height}
-        style={style}
-        loading={loading}
-        crossOrigin={crossOrigin}
-        onKeyDown={onKeyDown}
-        onClick={onClick}
-        onKeyPress={onKeyPress}
-        className={`${className} `}
-        id={id}
-      />
+      {shouldLoad ? (
+        <picture>
+          <source
+            srcSet={
+              isUrl ? isUrlValid : "https://phuongmychi.web.app/img/premium.jpg"
+            }
+            type="image/webp"
+          />
+          <img
+            src={
+              isUrl ? isUrlValid : "https://phuongmychi.web.app/img/premium.jpg"
+            }
+            alt={alt}
+            loading={loading}
+            crossOrigin={crossOrigin}
+            onClick={onClick}
+            style={style}
+            height={height}
+            width={width}
+            id={id}
+            onKeyPress={onKeyPress}
+            className={className}
+          />
+        </picture>
+      ) : (
+        <>
+          <div
+            id={id}
+            className={className}
+            style={{
+              backgroundImage: "linear-gradient(#91C884, #CCD492,#7CB4E0)",
+              borderRadius: "8px",
+            }}
+            ref={imgLoadingRef}
+          >
+            <p
+              style={{
+                paddingTop: "100px",
+                color: "white",
+                textAlign: "center",
+              }}
+            >
+              Loading ...
+            </p>
+          </div>
+        </>
+      )}
     </>
   );
 });

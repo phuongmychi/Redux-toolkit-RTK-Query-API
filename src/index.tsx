@@ -1,21 +1,24 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
+// import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
-import {Link} from "react-router-dom"
-
+import { Link } from "react-router-dom";
+import Loading from "./components/Loading";
+const App = React.lazy(() => import("./App"));
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <Suspense fallback={<div style={{display:'flex',justifyContent:'center'}}><Loading/></div>}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Suspense>
   </React.StrictMode>
 );
 

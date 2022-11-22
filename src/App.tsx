@@ -2,17 +2,12 @@
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */
 
-import React, { useCallback, useEffect, useState } from "react";
-import logo from "./logo.svg";
+import React from "react";
 import "./App.css";
-import {
-  useGetImageByNameQuery,
-  useLazyGetImageByNameQuery,
-} from "./redux/service";
 import ImageLazy from "./components/ImageLazy";
 import Loading from "./components/Loading";
-import { Link } from "react-router-dom";
 import {Header} from "./components/Header";
+import {useScollLoadMore} from "./hooks";
 
 export const removeDuplicate = (arr: []) => {
   const resp = arr
@@ -20,7 +15,6 @@ export const removeDuplicate = (arr: []) => {
     : [];
   return resp;
 };
-
 
 export type Photo = {
   id: number;
@@ -46,73 +40,36 @@ export type Photo = {
 };
 
 function App() {
-  const [page, setPage] = useState(1);
-
-  const config = {
-    name: "nature",
-    page: page,
-  };
-
-  const { data, error, isLoading } = useGetImageByNameQuery(config);
-  const [trigger] = useLazyGetImageByNameQuery();
-  const [dataPhotos, setDataPhotos] = useState<any>([]);
-  useEffect(() => {
-    const fetchApi = async () => {
-      const result = await trigger({
-        name: "nature",
-        page: 1,
-      }).refetch();
-      setDataPhotos(result?.data?.photos || []);
-    };
-    fetchApi();
-  }, [trigger]);
-  const loadMore = useCallback(() => {
-    setPage(page + 1);
-    setDataPhotos(dataPhotos.concat(...(data?.photos || [])));
-  }, [page, dataPhotos, setDataPhotos, setPage]);
-
-  const handleHome = async () => {
-    setDataPhotos([]);
-    setPage(1)
-    const result = await trigger({
-      name: "nature",
-      page: 1,
-    }).refetch();
-    if (result?.data) {
-      setDataPhotos(result?.data?.photos || []);
-    }
-  };
-  var clicks = 0; // counter
-  useEffect(() => {
-    function handleScrollEvent() {
-      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-        loadMore();
-        console.log(clicks+=1); // increment it
-        // here add more items in the 'filteredData' state from the 'allData' state source.
-      }
-    }
-    window.addEventListener('scroll', handleScrollEvent)
-
-    return () => {
-      window.removeEventListener('scroll', handleScrollEvent);
-    }
-  }, [loadMore])
-
+  const {
+    dataPhotos,
+    data,
+    error,
+    isLoading,
+    loadMore,
+    handleHome,
+    handleSearch,
+  } = useScollLoadMore();
   return (
     <>
-      <Header homePage={handleHome}/>
+      <Header onSearch={handleSearch} homePage={handleHome} />
       <div className="pageContainer">
         <div className="imgContainer">
-          {dataPhotos?.map((item: Photo) => (
-            <div className={"cardItem"} key={item?.id}>
-              <ImageLazy imgUrl={item?.src?.medium} className={"imgItem"} />
+          {dataPhotos?.map((item: Photo, index: number) => (
+            <div className={"cardItem"} key={index}>
+              <ImageLazy
+                loading={"lazy"}
+                alt={`Ảnh chụp của ${item?.photographer}`}
+                imgUrl={item?.src?.medium}
+                className={"imgItem"}
+              />
               <div className={"nameAuthor"}>{item?.photographer}</div>
             </div>
           ))}
         </div>
-        <div className={"loadMore"}>{error ? <p>Đã sảy ra lỗi không mong muốn</p>: null}</div>
+        <div className={"loadMore"}>
+          {error ? <p>Đã sảy ra lỗi không mong muốn</p> : null}
+        </div>
         <div className={"loadMore"}>{isLoading ? <Loading /> : null}</div>
-
       </div>
     </>
   );

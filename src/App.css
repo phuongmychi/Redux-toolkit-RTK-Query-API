@@ -6,6 +6,12 @@
   margin: auto;
   padding-top: 100px;
 }
+.lazy-background {
+  background-color: #00ffaa /* Placeholder image */
+}
+.visible{
+  display: none;
+}
 .loadingPage{
   display: flex;
   justify-content: center;
