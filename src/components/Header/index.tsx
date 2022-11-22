@@ -4,35 +4,33 @@
 
 import { Link } from "react-router-dom";
 import React from "react";
-
+import Head from "next/head";
 interface HeaderProps {
   homePage: () => void;
   onSearch: (keyword: string) => void;
+  title?: string;
 }
-export const Header: React.FC<HeaderProps> = ({ homePage, onSearch }) => {
-  function refreshPage() {
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
-  }
+export const Header: React.FC<HeaderProps> = ({
+  homePage,
+  onSearch,
+  title,
+}) => {
   return (
     <div className={"header"}>
       {" "}
-      <div style={{ display: "flex" }}>
+      <Head>
+        <title>{title ? title : ""}</title>
+      </Head>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
         <h3 onClick={homePage} style={{ cursor: "pointer" }}>
-          Redux toolkit RTK Query API{" "}
+          Photos{" "}
         </h3>
         <h3 style={{ cursor: "pointer", marginLeft: "100px" }}>
           <input
-              placeholder={"Search a photos"}
-            style={{
-              padding: "8px",
-              width: "100%",
-              borderRadius: "8px",
-              border: "blue solid ",
-            }}
+            placeholder={"Search a photos"}
+            id={"input"}
             onChange={(e: any) => onSearch(e?.target?.value)}
-            type={"text"}
+            type={"search"}
           />
         </h3>
       </div>

@@ -9,6 +9,23 @@
 .lazy-background {
   background-color: #00ffaa /* Placeholder image */
 }
+#input{
+  width:150px;
+  padding:8px;
+  border-radius:8px;
+  transition: width 2s;
+
+
+}
+
+#input:hover{
+  width:100%;
+  padding:8px;
+  border-radius:8px;
+  animation-name: example-input;
+
+}
+
 .visible{
   display: none;
 }
@@ -51,7 +68,14 @@
   height: 300px;
   border-radius: 8px;
   margin: 8px;
+  cursor: pointer;
 }
+/*.imgItem:hover{*/
+/*  width: 450px;*/
+/*  border-radius: 8px;*/
+/*  margin: 8px;*/
+/*  cursor: pointer;*/
+/*}*/
 .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -17,8 +17,6 @@ export const removeDuplicate = (arr: []) => {
   return resp;
 };
 
-
-
 function App() {
   const {
     dataPhotos,
@@ -38,7 +36,7 @@ function App() {
             <div className={"cardItem"} key={index}>
               <ImageLazy
                 loading={"lazy"}
-                alt={`Ảnh chụp của ${item?.photographer}`}
+                alt={`${item?.alt} `}
                 imgUrl={item?.src?.medium}
                 className={"imgItem"}
               />
