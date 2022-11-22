@@ -2,13 +2,16 @@
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */
 
-import React from "react";
-import "./App.css";
-import ImageLazy from "./components/ImageLazy";
-import Loading from "./components/Loading";
-import { Header } from "./components/Header";
-import { useScollLoadMore } from "./hooks";
-import { Photo } from "./components/Type/photoType";
+/*
+ * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
+ */
+
+import ImageLazy from "../components/ImageLazy";
+import Loading from "../components/Loading";
+import { Header } from "../components/Header";
+import { useScollLoadMore } from "../hooks";
+import { Photo } from "../components/Type/photoType";
+import Head from "next/head"
 
 export const removeDuplicate = (arr: []) => {
   const resp = arr
@@ -29,7 +32,7 @@ function App() {
   } = useScollLoadMore();
   return (
     <>
-      <Header onSearch={handleSearch} homePage={handleHome} />
+      <Header title={"Photo Page "} onSearch={handleSearch} homePage={handleHome} />
       <div className="pageContainer">
         <div className="imgContainer">
           {dataPhotos?.map((item: Photo, index: number) => (

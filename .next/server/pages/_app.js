@@ -4,7 +4,7 @@ exports.id = 888;
 exports.ids = [888];
 exports.modules = {
 
-/***/ 377:
+/***/ 560:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -21,17 +21,17 @@ var jsx_runtime_ = __webpack_require__(997);
 // EXTERNAL MODULE: external "react"
 var external_react_ = __webpack_require__(689);
 var external_react_default = /*#__PURE__*/__webpack_require__.n(external_react_);
-// EXTERNAL MODULE: ./src/styles/globals.css
-var globals = __webpack_require__(108);
+// EXTERNAL MODULE: ./styles/globals.css
+var globals = __webpack_require__(764);
 ;// CONCATENATED MODULE: external "react-redux"
 const external_react_redux_namespaceObject = require("react-redux");
 ;// CONCATENATED MODULE: external "@reduxjs/toolkit"
 const toolkit_namespaceObject = require("@reduxjs/toolkit");
 ;// CONCATENATED MODULE: external "@reduxjs/toolkit/query"
 const query_namespaceObject = require("@reduxjs/toolkit/query");
-// EXTERNAL MODULE: ./src/redux/service.ts + 1 modules
-var service = __webpack_require__(27);
-;// CONCATENATED MODULE: ./src/redux/store.ts
+// EXTERNAL MODULE: ./redux/service.ts + 1 modules
+var service = __webpack_require__(759);
+;// CONCATENATED MODULE: ./redux/store.ts
 /*
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */ 
@@ -51,7 +51,7 @@ const store = (0,toolkit_namespaceObject.configureStore)({
 // see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
 (0,query_namespaceObject.setupListeners)(store.dispatch);
 
-;// CONCATENATED MODULE: ./src/pages/_app.tsx
+;// CONCATENATED MODULE: ./pages/_app.tsx
 
 
 
@@ -73,7 +73,7 @@ function MyApp({ Component , pageProps  }) {
 
 /***/ }),
 
-/***/ 27:
+/***/ 759:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -87,7 +87,7 @@ __webpack_require__.d(__webpack_exports__, {
 
 ;// CONCATENATED MODULE: external "@reduxjs/toolkit/query/react"
 const react_namespaceObject = require("@reduxjs/toolkit/query/react");
-;// CONCATENATED MODULE: ./src/redux/service.ts
+;// CONCATENATED MODULE: ./redux/service.ts
 /*
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */ 
@@ -114,7 +114,7 @@ const { useGetImageByNameQuery , useLazyGetImageByNameQuery  } = imageApi;
 
 /***/ }),
 
-/***/ 108:
+/***/ 764:
 /***/ (() => {
 
 
@@ -144,7 +144,7 @@ module.exports = require("react/jsx-runtime");
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = (__webpack_exec__(377));
+var __webpack_exports__ = (__webpack_exec__(560));
 module.exports = __webpack_exports__;
 
 })();
