@@ -1,0 +1,19 @@
+/*
+ * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
+ */
+
+.sliderContainer{
+    display: flex;
+    justify-content: center;
+}
+.sliderContent{
+    display: block;
+    justify-content: center;
+    justify-items: center;
+}
+.naviButton{
+   padding-top: 50px;
+}
+.ButtonNavi{
+    display: flex;
+}

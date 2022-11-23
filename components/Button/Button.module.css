@@ -1,0 +1,15 @@
+/*
+ * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
+ */
+
+.button{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}

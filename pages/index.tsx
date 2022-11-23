@@ -2,7 +2,7 @@
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */
 
-import {Header, ImageLazy, Loading, Modal} from "../components";
+import {Header, ImageLazy, Loading, Modal, Slider} from "../components";
 import {useModal, useScollLoadMore} from "../hooks";
 import {Photo} from "../components/Type/photoType";
 
@@ -41,7 +41,9 @@ function App({ dataprops }: AppProp) {
                 loading={"lazy"}
                 alt={`${item?.alt} `}
                 imgUrl={item?.src?.medium}
-                onClick={()=>{toggleShowModal(item)}}
+                onClick={() => {
+                  toggleShowModal(item);
+                }}
                 className={"imgItem"}
               />
               <div className={"nameAuthor"}>{item?.photographer}</div>
@@ -51,7 +53,9 @@ function App({ dataprops }: AppProp) {
         <div className={"loadMore"}>
           {error ? <p>Đã sảy ra lỗi không mong muốn</p> : null}
         </div>
-        {isShowModal?<Modal item={itemData} toggleShowModal={toggleShowModal}/> :null}
+        {isShowModal ? (
+          <Modal item={itemData} toggleShowModal={toggleShowModal} />
+        ) : null}
 
         <div className={"loadMore"}>{isLoading ? <Loading /> : null}</div>
       </div>
