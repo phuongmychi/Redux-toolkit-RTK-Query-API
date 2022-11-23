@@ -2,15 +2,10 @@
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */
 
-import ImageLazy from "../components/ImageLazy";
-import Loading from "../components/Loading";
-import { Header } from "../components/Header";
-import { useScollLoadMore } from "../hooks";
-import { Photo } from "../components/Type/photoType";
-import { useGetImageByNameQuery } from "../redux/service";
-import axios from "axios";
-import Head from "next/head";
-import {GetServerSideProps} from "next";
+import {Header, ImageLazy, Loading, Modal} from "../components";
+import {useModal, useScollLoadMore} from "../hooks";
+import {Photo} from "../components/Type/photoType";
+
 export const removeDuplicate = (arr: []) => {
   const resp = arr
     ? arr?.filter((v, i, a) => a.findIndex((t: {}) => t === v) === i)
@@ -30,9 +25,9 @@ function App({ dataprops }: AppProp) {
     handleHome,
     handleSearch,
   } = useScollLoadMore();
+  const {toggleShowModal,isShowModal,itemData} = useModal();
   return (
     <>
-
       <Header
         title={"Photo Page "}
         onSearch={handleSearch}
@@ -46,12 +41,14 @@ function App({ dataprops }: AppProp) {
                 loading={"lazy"}
                 alt={`${item?.alt} `}
                 imgUrl={item?.src?.medium}
+                onClick={()=>{toggleShowModal(item)}}
                 className={"imgItem"}
               />
               <div className={"nameAuthor"}>{item?.photographer}</div>
             </div>
           ))}
         </div>
+        {isShowModal?<Modal item={itemData} toggleShowModal={toggleShowModal}/> :null}
         <div className={"loadMore"}>
           {error ? <p>Đã sảy ra lỗi không mong muốn</p> : null}
         </div>

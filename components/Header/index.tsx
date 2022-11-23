@@ -10,7 +10,7 @@ interface HeaderProps {
   onSearch: (keyword: string) => void;
   title?: string;
 }
-export const Header: React.FC<HeaderProps> = ({
+ const Header: React.FC<HeaderProps> = ({
   homePage,
   onSearch,
   title,
@@ -73,3 +73,4 @@ export const Header: React.FC<HeaderProps> = ({
     </div>
   );
 };
+export default Header
