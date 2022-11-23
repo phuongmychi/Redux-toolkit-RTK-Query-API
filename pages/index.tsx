@@ -48,10 +48,11 @@ function App({ dataprops }: AppProp) {
             </div>
           ))}
         </div>
-        {isShowModal?<Modal item={itemData} toggleShowModal={toggleShowModal}/> :null}
         <div className={"loadMore"}>
           {error ? <p>Đã sảy ra lỗi không mong muốn</p> : null}
         </div>
+        {isShowModal?<Modal item={itemData} toggleShowModal={toggleShowModal}/> :null}
+
         <div className={"loadMore"}>{isLoading ? <Loading /> : null}</div>
       </div>
     </>

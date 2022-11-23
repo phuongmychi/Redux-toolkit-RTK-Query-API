@@ -9,7 +9,6 @@ import {
   useLazyGetImageByNameQuery,
 } from "../redux/service";
 
-
 const useScollLoadMore = () => {
   const [page, setPage] = useState(1);
 
@@ -38,7 +37,7 @@ const useScollLoadMore = () => {
     setDataPhotos(dataPhotos.concat(...(data?.photos || [])));
   }, [page, dataPhotos, setDataPhotos, setPage]);
 
-  const handleHome = async () => {
+  const handleHome = useCallback(async () => {
     setDataPhotos([]);
     setKeyword("");
     setPage(1);
@@ -49,21 +48,23 @@ const useScollLoadMore = () => {
     if (result?.data) {
       setDataPhotos(result?.data?.photos || []);
     }
-  };
+  }, [setDataPhotos, setKeyword, setPage]);
 
-  const handleSearch
-      = useCallback(async (keyword: string) => {
-    setDataPhotos([]);
-    setPage(1);
-    setKeyword(keyword || "");
-    const result = await trigger({
-      name: keyword,
-      page: 1,
-    }).refetch();
-    if (result?.data) {
-      setDataPhotos(result?.data?.photos || []);
-    }
-  }, [keyword,setKeyword,setPage]);
+  const handleSearch = useCallback(
+    async (keyword: string) => {
+      setDataPhotos([]);
+      setPage(1);
+      setKeyword(keyword || "");
+      const result = await trigger({
+        name: keyword,
+        page: 1,
+      }).refetch();
+      if (result?.data) {
+        setDataPhotos(result?.data?.photos || []);
+      }
+    },
+    [keyword, setKeyword, setPage]
+  );
   useEffect(() => {
     function handleScrollEvent() {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
