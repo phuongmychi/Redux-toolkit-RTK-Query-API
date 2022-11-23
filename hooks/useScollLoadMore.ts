@@ -8,11 +8,8 @@ import {
   useGetImageByNameQuery,
   useLazyGetImageByNameQuery,
 } from "../redux/service";
-export async function getServerSideProps(context:any) {
-  return {
-    props: {}, // will be passed to the page component as props
-  }
-}
+
+
 const useScollLoadMore = () => {
   const [page, setPage] = useState(1);
 

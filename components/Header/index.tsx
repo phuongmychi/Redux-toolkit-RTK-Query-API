@@ -3,7 +3,6 @@
  */
 
 import { Link } from "react-router-dom";
-import React from "react";
 import Head from "next/head";
 interface HeaderProps {
   homePage: () => void;
@@ -20,6 +19,7 @@ export const Header: React.FC<HeaderProps> = ({
       {" "}
       <Head>
         <title>{title ? title : ""}</title>
+        <meta charSet="utf-8"/>
       </Head>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         <h3 onClick={homePage} style={{ cursor: "pointer" }}>

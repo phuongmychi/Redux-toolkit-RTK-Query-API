@@ -7,10 +7,7 @@ import {BaseQueryFn, createApi, fetchBaseQuery,} from "@reduxjs/toolkit/query/re
 export const imageApi = createApi({
   reducerPath: "imgApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.pexels.com",
-    headers: {
-      Authorization: "563492ad6f917000010000013055054dae6a40da8456b7ccde8b934c",
-    },
+    baseUrl: "https://api.phuongmychi.vn/v1",
   }) ,
   endpoints: (builder) => ({
     getImageByName: builder.query<
@@ -20,7 +17,7 @@ export const imageApi = createApi({
       any
     >({
       query: (data: { name: string; page: number }) =>
-        `v1/search?query=${data?.name}&page=${data?.page}`,
+        `photos?query=${data?.name}&page=${data?.page}`,
     }),
   }),
 });
