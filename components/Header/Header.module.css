@@ -1,0 +1,14 @@
+.header{
+  width: 100vw;
+  background-color: whitesmoke;
+  position: fixed;
+  padding: 5px;
+  margin-bottom: 500px;
+  left: 0;
+  top: 0;
+
+}
+.inputSearch{
+  display: flex;
+  padding-left: 20px;
+}

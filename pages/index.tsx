@@ -2,9 +2,9 @@
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */
 
-import {Header, ImageLazy, Loading, Modal, Slider} from "../components";
-import {useModal, useScollLoadMore} from "../hooks";
-import {Photo} from "../components/Type/photoType";
+import { Header, ImageLazy, Loading, Modal, Slider } from "../components";
+import { useModal, useScollLoadMore } from "../hooks";
+import { Photo } from "../components/Type/photoType";
 
 export const removeDuplicate = (arr: []) => {
   const resp = arr
@@ -25,41 +25,42 @@ function App({ dataprops }: AppProp) {
     handleHome,
     handleSearch,
   } = useScollLoadMore();
-  const {toggleShowModal,isShowModal,itemData} = useModal();
+  const { toggleShowModal, isShowModal, itemData } = useModal();
   return (
-    <>
-      <Header
-        title={"Photo Page "}
-        onSearch={handleSearch}
-        homePage={handleHome}
-      />
-      <div className="pageContainer">
-        <div className="imgContainer">
-          {dataPhotos?.map((item: Photo, index: number) => (
-            <div className={"cardItem"} key={index}>
-              <ImageLazy
-                loading={"lazy"}
-                alt={`${item?.alt} `}
-                imgUrl={item?.src?.medium}
-                onClick={() => {
-                  toggleShowModal(item);
-                }}
-                className={"imgItem"}
-              />
-              <div className={"nameAuthor"}>{item?.photographer}</div>
-            </div>
-          ))}
-        </div>
-        <div className={"loadMore"}>
-          {error ? <p>Đã sảy ra lỗi không mong muốn</p> : null}
-        </div>
-        {isShowModal ? (
-          <Modal item={itemData} toggleShowModal={toggleShowModal} />
-        ) : null}
 
-        <div className={"loadMore"}>{isLoading ? <Loading /> : null}</div>
-      </div>
-    </>
+      <>
+        <Header
+            title={"Photo Page "}
+            onSearch={handleSearch}
+            homePage={handleHome}
+        />
+        <div className="pageContainer">
+          <div className="imgContainer">
+            {dataPhotos?.map((item: Photo, index: number) => (
+              <div className={"cardItem"} key={index}>
+                <ImageLazy
+                  loading={"lazy"}
+                  alt={`${item?.alt} `}
+                  imgUrl={item?.src?.medium}
+                  onClick={() => {
+                    toggleShowModal(item);
+                  }}
+                  className={"imgItem"}
+                />
+                <div className={"nameAuthor"}>{item?.photographer}</div>
+              </div>
+            ))}
+          </div>
+          <div className={"loadMore"}>
+            {error ? <p>Đã sảy ra lỗi không mong muốn</p> : null}
+          </div>
+          {isShowModal ? (
+            <Modal item={itemData} toggleShowModal={toggleShowModal} />
+          ) : null}
+
+          <div className={"loadMore"}>{isLoading ? <Loading /> : null}</div>
+        </div>
+      </>
   );
 }
 
