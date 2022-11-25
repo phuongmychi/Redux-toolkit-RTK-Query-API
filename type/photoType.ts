@@ -2,8 +2,12 @@
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */
 
+/*
+ * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
+ */
 
-export type Photo = {
+
+export type photoType = {
     id: number;
     width: number;
     height: number;

@@ -2,9 +2,9 @@
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */
 
-import { Header, ImageLazy, Loading, Modal, Photo } from "components";
+import { Header, ImageLazy, Loading, Modal } from "components";
 import { useModal, useScollLoadMore } from "hooks";
-
+import { photoType } from "type";
 
 interface AppProp {
   dataprops: [];
@@ -29,7 +29,7 @@ function App({ dataprops }: AppProp) {
       />
       <div className="pageContainer">
         <div className="imgContainer">
-          {dataPhotos?.map((item: Photo, index: number) => (
+          {dataPhotos?.map((item: photoType, index: number) => (
             <div className={"cardItem"} key={index}>
               <ImageLazy
                 loading={"lazy"}
@@ -56,7 +56,5 @@ function App({ dataprops }: AppProp) {
     </>
   );
 }
-
-
 
 export default App;
