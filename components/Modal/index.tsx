@@ -3,12 +3,12 @@
  */
 import { FC } from "react";
 import styles from "./Modal.module.css";
-import { ImageLazy } from "../index";
-import {Photo} from "../Type/photoType";
+import { ImageLazy } from "components";
+import { photoType } from "type";
 
 interface ModalProp {
   toggleShowModal: (item: any) => void;
-  item: Photo;
+  item: photoType;
 }
 const Modal: FC<ModalProp> = ({ toggleShowModal, item }) => {
   return (
@@ -26,10 +26,12 @@ const Modal: FC<ModalProp> = ({ toggleShowModal, item }) => {
           <h2>Hình ảnh : {item?.id}</h2>
         </div>
         <div className={styles.modalBody}>
-          <ImageLazy imgUrl={item?.src?.large} style={{width:'100%',height:'max-content'}} />
+          <ImageLazy
+            imgUrl={item?.src?.large}
+            style={{ width: "100%", height: "max-content" }}
+          />
           <p>{item?.alt}</p>
           <p>{`Tác giả : ${item?.photographer}`}</p>
-
         </div>
         {/*<div className={styles.modalFooter}>*/}
         {/*  <h3>Modal Footer</h3>*/}

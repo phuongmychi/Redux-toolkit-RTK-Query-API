@@ -9,7 +9,7 @@ import React, {
   KeyboardEventHandler,
   useMemo,
 } from "react";
-import useImageBroken from "../../hooks/useImageBroken";
+import {useImageBroken} from "hooks";
 
 export type ImageLazyProps = {
   imgUrl: string;
