@@ -3,9 +3,8 @@
  */
 
 import { configureStore } from '@reduxjs/toolkit'
-// Or from '@reduxjs/toolkit/query/react'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import { imageApi } from './service'
+import { imageApi } from 'redux/service'
 
 export const store = configureStore({
     reducer: {
