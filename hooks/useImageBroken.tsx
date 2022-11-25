@@ -1,7 +1,6 @@
 /*
-hook để kiểm tra hình ảnh bị lỗi đường dẫn
-
-*/
+ * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
+ */
 
 import { useEffect, useState } from 'react';
 
@@ -11,14 +10,10 @@ const useImageBroken = (url: string) => {
   useEffect(() => {
     const s = document.createElement('IMG') as HTMLImageElement;
     s.src = url;
-    // eslint-disable-next-line func-names
     s.onerror = function () {
-      // đường dẫn ảnh bị lỗi hoặc url hình ảnh ko tìm thấy set false;
       setImg(false);
     };
-    // eslint-disable-next-line func-names
     s.onload = function () {
-      // load hình ảnh thành công set true
       setImg(true);
     };
   }, [url]);

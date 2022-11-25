@@ -4,7 +4,7 @@
 
 import { Header, ImageLazy, Loading, Modal } from "components";
 import { useModal, useScollLoadMore } from "hooks";
-import { photoType } from "type";
+import { photoType, photoDefault } from "type";
 
 interface AppProp {
   dataprops: [];
@@ -48,7 +48,10 @@ function App({ dataprops }: AppProp) {
           {error ? <p>Đã sảy ra lỗi không mong muốn</p> : null}
         </div>
         {isShowModal ? (
-          <Modal item={itemData} toggleShowModal={toggleShowModal} />
+          <Modal
+            item={itemData || photoDefault}
+            toggleShowModal={toggleShowModal}
+          />
         ) : null}
 
         <div className={"loadMore"}>{isLoading ? <Loading /> : null}</div>
