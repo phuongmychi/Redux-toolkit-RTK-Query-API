@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import {
   useGetImageByNameQuery,
   useLazyGetImageByNameQuery,
-} from "../redux/service";
+} from "redux/service";
 
 const useScollLoadMore = () => {
   const [page, setPage] = useState(1);

@@ -2,7 +2,7 @@
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */
 
-import {BaseQueryFn, createApi, fetchBaseQuery,} from "@reduxjs/toolkit/query/react";
+import {createApi, fetchBaseQuery,} from "@reduxjs/toolkit/query/react";
 
 export const imageApi = createApi({
   reducerPath: "imgApi",
