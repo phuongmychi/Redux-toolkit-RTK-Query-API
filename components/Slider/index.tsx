@@ -4,25 +4,24 @@
 
 import React, { Component, FC, useState } from "react";
 import styles from "./Slider.module.css";
-import useSlider from "./useSlider";
-import { Button, ImageLazy } from "../index";
+import { useSlider } from "hooks";
+import { Button, ImageLazy } from "components";
 
 interface SliderProps {
   data: [];
 }
 const Slider: FC<SliderProps> = ({ data }) => {
-  const { prevSlide,nextSlide,current} = useSlider(data);
+  const { prevSlide, nextSlide, current } = useSlider(data);
 
   return (
     <div className={styles?.sliderContainer}>
       <div className={styles.sliderContent}>
+        <div className={styles.ButtonNavi}>
+          <Button buttonText={"Prev"} onClick={prevSlide} />
+          <Button buttonText="Next" onClick={nextSlide} />
+        </div>
 
-          <div className={styles.ButtonNavi}>
-              <Button  buttonText={"Prev"} onClick={prevSlide} />
-              <Button buttonText="Next" onClick={nextSlide} />
-          </div>
-
-          {data?.map((item: any, index: number) => (
+        {data?.map((item: any, index: number) => (
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             {index === current && (
               <ImageLazy
@@ -33,7 +32,6 @@ const Slider: FC<SliderProps> = ({ data }) => {
           </div>
         ))}
       </div>
-
     </div>
   );
 };
