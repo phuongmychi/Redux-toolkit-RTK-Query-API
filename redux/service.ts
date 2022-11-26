@@ -2,13 +2,14 @@
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */
 
-import {createApi, fetchBaseQuery,} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { API_URL } from "httpClient";
 
 export const imageApi = createApi({
   reducerPath: "imgApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.phuongmychi.vn/v1",
-  }) ,
+    baseUrl: API_URL,
+  }),
   endpoints: (builder) => ({
     getImageByName: builder.query<
       {
@@ -22,4 +23,4 @@ export const imageApi = createApi({
   }),
 });
 
-export const { useGetImageByNameQuery,useLazyGetImageByNameQuery } = imageApi;
+export const { useGetImageByNameQuery, useLazyGetImageByNameQuery } = imageApi;
