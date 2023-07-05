@@ -31,10 +31,10 @@ function App({ dataprops }: AppProp) {
         <div className="imgContainer">
           {dataPhotos?.map((item: photoType, index: number) => (
             <div className={"cardItem"} key={index}>
-              <ImageLazy
+              <img
                 loading={"lazy"}
                 alt={`${item?.alt} `}
-                imgUrl={item?.src?.medium}
+                src={item?.src?.medium}
                 onClick={() => {
                   toggleShowModal(item);
                 }}

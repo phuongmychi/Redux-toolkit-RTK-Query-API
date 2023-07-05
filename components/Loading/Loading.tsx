@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2022. Phuong My Chi Entertainment Co.,Ltd
  */
+import React from "react";
 import styles from "./Loading.module.css";
 import { FC } from "react";
 interface LoadingProps {
